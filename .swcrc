@@ -1,0 +1,28 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "jsc": {
+    "baseUrl": ".",
+    "keepClassNames": true,
+    "parser": {
+      "decorators": true,
+      "syntax": "typescript"
+    },
+    "paths": {
+      "src/*": [
+        "src/*"
+      ]
+    },
+    "target": "es2023",
+    "transform": {
+      "decoratorMetadata": true,
+      "legacyDecorator": true
+    }
+  },
+  "module": {
+    "noInterop": false,
+    "strict": true,
+    "strictMode": true,
+    "type": "es6"
+  },
+  "sourceMaps": true
+}
