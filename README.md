@@ -12,40 +12,85 @@ This tool verifies that lottery draws conducted on DOKDODAO campaigns or events 
 
 ## Installation
 
+### From Source
+
 ```bash
 # Clone the repository
-git clone https://github.com/pherateriw/lottery-verification.git
+git clone https://github.com/DOKDODAO/lottery-verification.git
 cd lottery-verification
 
 # Install dependencies
-pnpm install
+bun install
 
-# Build
-pnpm build
+# Run directly
+bun start <url>
 ```
+
+### Pre-built Binaries
+
+Download the latest release for your platform from the [Releases](https://github.com/DOKDODAO/lottery-verification/releases) page.
+
+| Platform | Architecture | File |
+|----------|--------------|------|
+| Windows | x64 | `lottery-verification-win-x64.exe` |
+| Linux | x64 | `lottery-verification-linux-x64` |
+| Linux | ARM64 | `lottery-verification-linux-arm64` |
+| macOS | Intel (x64) | `lottery-verification-macos-x64` |
+| macOS | Apple Silicon (ARM64) | `lottery-verification-macos-arm64` |
 
 ## Usage
 
+### Basic Command
+
 ```bash
-node dist/main.js <url>
+# Using Bun
+bun start <url>
+
+# Using pre-built binary
+./lottery-verification <url>
 ```
 
 ### Examples
 
 ```bash
 # Verify an event
-node dist/main.js https://www.dokdodao.io/events/145076508687994880
+bun start https://www.dokdodao.io/events/145076508687994880
 
 # Verify a campaign
-node dist/main.js https://www.dokdodao.io/campaigns/136376065879314455
+bun start https://www.dokdodao.io/campaigns/136376065879314455
+
+# Display help
+bun start -h
+
+# Display version
+bun start -V
 ```
 
 ### Options
 
+| Option | Description |
+|--------|-------------|
+| `-V, --version` | Output version information |
+| `-h, --help` | Display help for command |
+
+### Output Example
+
 ```
--V, --version  Output version information
--h, --help     Display help for command
+[INFO] Verifying lottery: events 145076508687994880
+[INFO] Merkle root: 0x1234567890abcdef...
+[INFO] 1st Place: 137177125719643403 (ticket #42)
+[INFO] 2nd Place: 136773799807029658 (ticket #128)
+[INFO] 2nd Place: 139719699848238255 (ticket #256)
+...
 ```
+
+### Verification Steps
+
+1. Run the command with a DOKDODAO event or campaign URL
+2. The tool fetches participant data from the API
+3. Calculates the Merkle root and compares with on-chain data
+4. Computes winners using the VRF random seed
+5. Displays the verification results
 
 ## How It Works
 
@@ -80,20 +125,26 @@ Confirms that calculated results match the results recorded on-chain.
 
 ```bash
 # Development mode (auto-restart on file changes)
-pnpm dev
+bun dev
 
 # Type check
-pnpm typecheck
+bun run typecheck
 
-# Build
-pnpm build
+# Build for current platform
+bun run build
+
+# Build for specific platforms
+bun run build:windows
+bun run build:linux
+bun run build:linux-arm
+bun run build:macos
+bun run build:macos-arm
 ```
 
 ## Tech Stack
 
-- **Runtime**: Node.js
+- **Runtime**: Bun
 - **Language**: TypeScript
-- **Build**: SWC
 - **Blockchain**: ethers.js (keccak256, solidityPacked)
 - **CLI**: Commander
 - **Logging**: Pino

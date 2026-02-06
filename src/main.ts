@@ -8,9 +8,6 @@
  *
  * See LICENSE.md for full terms.
  */
-import fs from "node:fs";
-import path from "node:path";
-import url from "node:url";
 import {
   program,
 } from "commander";
@@ -34,14 +31,14 @@ import {
   campaignInfoSchema,
   eventInfoSchema,
 } from "./lottery-info.schema.js";
-
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
+import {
+  VERSION,
+} from "./version.js";
 
 program
   .name("lottery-verification")
   .description("DOKDODAO Lottery Verification System")
-  .version(pkg.version)
+  .version(VERSION)
   .argument(
     "<url>",
     "DOKDODAO campaign or event URL (e.g. https://www.dokdodao.io/events/{145076508687994880})"
